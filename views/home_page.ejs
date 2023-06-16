@@ -1,0 +1,32 @@
+
+
+<form action="add/habit" method="post">
+    <label for="habitName">Are you ready to develop a habit?? or Not??</label>
+    <input type="text" name="habitName" placeholder="Enter your habit....">
+    <input type="time" name="habitTime" placeholder="Enter your desired time">
+    <input type="submit" value="Hoorah!! You finally made a decision!!">
+
+</form>
+
+
+<h1>
+    Habits you opted for...
+</h1>
+
+<ul>
+<% for(habit of Habit) {%>
+    <a href="/habit/streak/<%= habit._id %>">
+
+        <li>
+            <%= habit.content %>
+            <%= habit.time %>
+            <P>
+                <%= habit.createdAt.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) %>
+            </P>
+        </li>
+
+    </a>
+   
+<%}%>
+
+</ul>
