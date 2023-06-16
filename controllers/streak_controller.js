@@ -14,8 +14,7 @@ module.exports.streak = async function(req, res) {
       res.render('streak', {
         title: 'Streak Week View',
         habit: habit,
-        streaks: streaks,
-        selectedView: selectedView
+        streaks: streaks
       });
     } catch (err) {
       console.error('Error fetching streak:', err);

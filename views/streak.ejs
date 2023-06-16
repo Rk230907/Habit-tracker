@@ -12,7 +12,7 @@
       <% let habitStreak = 0; %>
       <% let currentStreak = 0; %>
       <% let longestStreak = 0; %>
-      <% for(let i = 0; i < 7; i++) { %>
+      <% for (let i = 6; i >= 0; i--) { %>
         <th>
           <%= getDayName(i) %> <br> <%= getDate(i) %>
           <br>
@@ -41,13 +41,13 @@
 <% function getDayName(index) { %>
   <% const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']; %>
   <% const today = new Date(); %>
-  <% const currentDayIndex = (today.getDay() + index) % 7; %>
+  <% const currentDayIndex = (today.getDay() - index + 7) % 7; %>
   <% return days[currentDayIndex]; %>
 <% } %>
 
 <% function getDate(index) { %>
   <% const today = new Date(); %>
-  <% today.setDate(today.getDate() + index); %>
+  <% today.setDate(today.getDate() - index); %>
   <% const date = today.getDate(); %>
   <% const month = today.getMonth() + 1; %>
   <% const year = today.getFullYear(); %>
