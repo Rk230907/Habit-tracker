@@ -7,7 +7,7 @@ module.exports.home = async function(req, res){
         const habits = await Habit.find({}); 
         
         return res.render('home_page', {
-            title: "Codeial | Home",
+            title: "My Habits | Home",
             Habit: habits
         });
     }catch(err){
