@@ -13,6 +13,11 @@ const db = require('./config/mongoose');
 app.use(express.urlencoded());
 
 
+// Use express static to run CSS in another file. .ie external CSS
+app.use(express.static('./assets'));
+
+
+
 // set up the view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');

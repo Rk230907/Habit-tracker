@@ -1,32 +1,35 @@
+<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
+<h1>Add a Habit</h1>
+
+<!-- Action form to submit the habits for particular routes -->
 
 <form action="add/habit" method="post">
-    <label for="habitName">Are you ready to develop a habit?? or Not??</label>
+    <label for="habitName">Are you ready to develop a habit? or Not?</label>
     <input type="text" name="habitName" placeholder="Enter your habit....">
     <input type="time" name="habitTime" placeholder="Enter your desired time">
     <input type="submit" value="Hoorah!! You finally made a decision!!">
-
 </form>
 
+<h1>Habits you opted for...</h1>
 
-<h1>
-    Habits you opted for...
-</h1>
 
-<ul>
-<% for(habit of Habit) {%>
-    <a href="/habit/streak/<%= habit._id %>">
+<!-- List down the habits of user -->
 
-        <li>
-            <%= habit.content %>
-            <%= habit.time %>
-            <P>
-                <%= habit.createdAt.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) %>
-            </P>
-        </li>
+    <ul>
+        <% for(habit of Habit) { %>
+        <a href="/habit/streak/<%= habit._id %>">
+            <li>
+                <b><p><i class="fa-solid fa-user" style="color: #062965;"></i>  &nbsp; &nbsp;Habit to follow buddy !! --- <%= habit.content %></p></b>
+                <i><p><i class='fas fa-clock'></i> --- <%= habit.time %></p></i>
+                <p class="created-on">Created on --- <%= habit.createdAt.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) %></p>
+            </li>
+        </a>
+        <% } %>
+    </ul>
 
-    </a>
+    
+
    
-<%}%>
-
-</ul>

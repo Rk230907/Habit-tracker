@@ -1,55 +1,75 @@
-<h1>Streak Week View</h1>
+<link rel="stylesheet" href="/css/streak.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<%= habit.content %>
+<h1> <i class="fa-brands fa-weebly" style="color: #276add;"></i> Weekly View</h1>
 
-<% const currentMonth = new Date().toLocaleString('default', { month: 'long' }); %>
-<h2><%= currentMonth %></h2>
+  <% const currentMonth = new Date().toLocaleString('default', { month: 'long' }); %>
+  <h2> <i class="fa-solid fa-calendar-week fa-fade" style="color: #1862e2;"></i> <%= currentMonth %></h2>
+  <h1>
+    <i class="fa-solid fa-clipboard" style="color: #083a91;"></i> <span>Habit Name - </span><%= habit.content %>
+  </h1>
 
-<form action="update/dates" method="post">
-  <input type="text" name="habitID" value="<%= habit.id %>">
-  <table>
-    <tr>
-      <% let habitStreak = 0; %>
-      <% let currentStreak = 0; %>
-      <% let longestStreak = 0; %>
-      <% for (let i = 6; i >= 0; i--) { %>
-        <th>
-          <%= getDayName(i) %> <br> <%= getDate(i) %>
-          <br>
-          <% const uniqueName = `checkbox_${i}`; %>
-          <% const streakExists = streaks.find(streak => streak.habit._id.toString() === habit.id.toString()); %>
-          <% const isCompleted = streakExists && streakExists.datesCompleted[i].completed; %>
-          <% if (isCompleted) { %>
-            <% habitStreak++; %>
-            <% currentStreak++; %>
-            <% if (currentStreak > longestStreak) { %>
-              <% longestStreak = currentStreak; %>
+  <!-- Form to update the dates on which user has done the activity -->
+
+  <form action="update/dates" method="post">
+    <input type="hidden" name="habitID" value="<%= habit.id %>">
+    <table>
+      <tr>
+        <% let habitStreak = 0; %>
+        <% let currentStreak = 0; %>
+        <% let longestStreak = 0; %>
+        <% for (let i = 6; i >= 0; i--) { %>
+          <th>
+            <%= getDayName(i) %> <br> <%= getDate(i) %>
+            <br>
+
+            <!-- Unique name to identify the streak date user want to update -->
+
+            <% const uniqueName = `checkbox_${i}`; %>
+            <% const streakExists = streaks.find(streak => streak.habit._id.toString() === habit.id.toString()); %>
+            <% const isCompleted = streakExists && streakExists.datesCompleted[i].completed; %>
+
+            <!-- A check to see whether a checkbox is already ticked, if ticked render as by default on -->
+
+            <% if (isCompleted) { %>
+              <% habitStreak++; %>
+              <% currentStreak++; %>
+              <% if (currentStreak > longestStreak) { %>
+                <% longestStreak = currentStreak; %>
+              <% } %>
+            <% } else { %>
+              <% currentStreak = 0; %>
             <% } %>
-          <% } else { %>
-            <% currentStreak = 0; %>
-          <% } %>
-          <input type="checkbox" name="<%= uniqueName %>" <% if (isCompleted) { %>checked<% } %>>
-        </th>
-      <% } %>
-    </tr>
-  </table>
-  <p>Completed: <%= habitStreak %> / 7</p>
-  <p>Longest Streak: <%= longestStreak %></p>
-  <input type="submit" value="Submit">
-</form>
+            <label>
+              <input type="checkbox" name="<%= uniqueName %>" <% if (isCompleted) { %>checked<% } %>>
+              <span></span>
+            </label>
+          </th>
+        <% } %>
+      </tr>
+    </table>
+    <p>Total followed days from the date you subscribed: <%= habitStreak %> / 7</p>
+    <p>Longest Streak: <%= longestStreak %></p>
+    <input type="submit" value="Submit">
+  </form>
 
-<% function getDayName(index) { %>
-  <% const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']; %>
-  <% const today = new Date(); %>
-  <% const currentDayIndex = (today.getDay() - index + 7) % 7; %>
-  <% return days[currentDayIndex]; %>
-<% } %>
 
-<% function getDate(index) { %>
-  <% const today = new Date(); %>
-  <% today.setDate(today.getDate() - index); %>
-  <% const date = today.getDate(); %>
-  <% const month = today.getMonth() + 1; %>
-  <% const year = today.getFullYear(); %>
-  <% return `${date}/${month}/${year}`; %>
-<% } %>
+  <!-- Used two functions to get the date and day name -->
+
+  <% function getDayName(index) { %>
+    <% const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']; %>
+    <% const today = new Date(); %>
+    <% const currentDayIndex = (today.getDay() - index + 7) % 7; %>
+    <% return days[currentDayIndex]; %>
+  <% } %>
+
+  <% function getDate(index) { %>
+    <% const today = new Date(); %>
+    <% today.setDate(today.getDate() - index); %>
+    <% const date = today.getDate(); %>
+    <% const month = today.getMonth() + 1; %>
+    <% const year = today.getFullYear(); %>
+    <% return `${date}/${month}/${year}`; %>
+  <% } %>
+  
+  <a href="/" class="go-home">🏠 Go to Home</a>
